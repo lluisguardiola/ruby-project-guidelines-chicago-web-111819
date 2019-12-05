@@ -1,8 +1,37 @@
 class Attendee < ActiveRecord::Base
     has_many :concerts, through: :attendee_concerts
 
+    def self.new_or_existing
+        puts "Are you a new user or returning user? (n/r)"
+        user_status = gets.chomp
+
+        if user_status.downcase == "n" || user_status.downcase == "new"
+            puts "Thank you for using GoShow!"
+            puts "Follow these steps to create your profile,"
+            sleep(3)
+            self.create_attendee_profile
+        elsif user_status.downcase == "r" || user_status.downcase == "returning" 
+            puts "Thank you for using GoShow! Please verify the email on your profile:"
+            validate_email = gets.chomp
+            self.validate_attendee(validate_email)
+            puts `clear`
+            puts "User found. Welcome back!"
+            sleep(3)
+            #REDIRECT USER TO A METHOD
+            #SAID METHOD IS NOT WRITTEN YET
+        else
+            puts "Please enter (n/r)"
+            sleep(3)
+            self.new_or_existing
+        end
+    end
+
+    def self.validate_attendee(email_input)
+        self.all.find_by email: email_input
+    end
+
     def self.create_attendee_profile
-        puts "\n"
+        puts `clear`
         puts "Please enter your full name:"
         puts "\n"
         name = gets.chomp
@@ -36,10 +65,8 @@ class Attendee < ActiveRecord::Base
             puts "Great, your profile is complete!"
             sleep(3)
         elsif profilestatus.downcase == "n" || profilestatus.downcase == "no" 
-            puts "PLEASE ENTER CORRECT VALUES."
+            p "Please enter your correct information."
             sleep(3)
-            #here we would delete the user values
-            #delete the attendee instance from db
             self.create_attendee_profile
         else
             puts "Please enter (y/n)"

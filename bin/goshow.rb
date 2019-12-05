@@ -2,10 +2,12 @@
 
 require_relative '../config/environment'
 
+puts `clear`
 puts "Welcome to GoShow!"
+puts "\n"
 #assuming every user is a new user, send them directly to profile creation
 
-Attendee.create_attendee_profile
+Attendee.new_or_existing
 
 
 puts `clear`
