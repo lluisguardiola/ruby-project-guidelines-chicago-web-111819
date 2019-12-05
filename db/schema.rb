@@ -19,26 +19,25 @@ ActiveRecord::Schema.define(version: 5) do
     t.datetime "updated_at"
   end
 
+  create_table "attendee_concerts", force: :cascade do |t|
+    t.integer  "concert_id"
+    t.integer  "attendee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attendees", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "age"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "concerts", force: :cascade do |t|
     t.date     "show_date"
     t.integer  "artist_id"
     t.integer  "venue_id"
-    t.integer  "attendance"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fanconcerts", force: :cascade do |t|
-    t.integer  "concert_id"
-    t.integer  "fan_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fans", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "age"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

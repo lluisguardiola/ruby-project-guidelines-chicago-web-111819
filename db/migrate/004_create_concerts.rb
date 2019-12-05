@@ -4,7 +4,6 @@ class CreateConcerts < ActiveRecord::Migration[4.2]
             t.date :show_date
             t.integer :artist_id
             t.integer :venue_id
-            t.integer :attendance
             t.timestamps
         end
     end
