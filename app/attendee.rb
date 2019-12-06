@@ -133,6 +133,13 @@ class Attendee < ActiveRecord::Base
         puts "Please confirm your current email to make changes:"
         email_input = gets.chomp
         current_user = self.all.find_by email: email_input
+        if current_user == nil
+            puts "Unable to validate email. Please try again."
+            sleep (3)
+            puts `clear`
+            self.edit_name
+        end
+        puts "\n"
         puts "Please enter your new Name:"
         new_name = gets.chomp
         puts "\n"
@@ -159,6 +166,13 @@ class Attendee < ActiveRecord::Base
         puts "Please confirm your current email to make changes:"
         email_input = gets.chomp
         current_user = self.all.find_by email: email_input
+        if current_user == nil
+            puts "Unable to validate email. Please try again."
+            sleep (3)
+            puts `clear`
+            self.edit_age
+        end
+        puts "\n"
         puts "Please enter your new Age:"
         new_age = gets.chomp
         puts "\n"
@@ -185,6 +199,13 @@ class Attendee < ActiveRecord::Base
         puts "Please confirm your current email to make changes:"
         email_input = gets.chomp
         current_user = self.all.find_by email: email_input
+        if current_user == nil
+            puts "Unable to validate email. Please try again."
+            sleep (3)
+            puts `clear`
+            self.edit_email
+        end
+        puts "\n"
         puts "Please enter your new Email:"
         new_email = gets.chomp
         puts "\n"
@@ -211,6 +232,7 @@ class Attendee < ActiveRecord::Base
         puts "Please confirm your current email to make changes:"
         email_input = gets.chomp
         current_user = self.all.find_by email: email_input
+        puts "\n"
         puts "We're sorry to see you go! Are you sure you want to delete your profile, #{current_user.name}? (y/N)"
         delete_choice = gets.chomp
         if delete_choice.downcase == "n"
@@ -222,6 +244,7 @@ class Attendee < ActiveRecord::Base
         elsif delete_choice.downcase == "y"
             puts "\n"
             puts "Your profile will be deleted. Please come back any time!"
+            sleep(3)
             current_user.delete
             puts `clear`
             self.new_or_existing
