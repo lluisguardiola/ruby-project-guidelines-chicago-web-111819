@@ -30,9 +30,15 @@ class Concert < ActiveRecord::Base
 
     def self.artist_search(search_artist)
         found_artist = Artist.all.find_by name: search_artist
-        # binding.pry
         if found_artist.id
-            p self.all.find_by artist_id: found_artist.id
+            found_concerts = self.all.select {|o| o.artist_id == found_artist.id}
+            puts "\n"
+            puts "These are the upcoming events for #{found_artist.name}"
+            puts "\n"
+            found_concerts.each do |concert|
+                puts "#{concert.show_date}, at #{concert.venue.name}"
+            end
+            puts "\n"
         else
             puts "Sorry, we couldn't find any upcoming shows for that artist!"
             sleep(3)
@@ -42,8 +48,18 @@ class Concert < ActiveRecord::Base
     end
 
     def self.venue_search(search_venue)
-        if self.all.find_by venue: search_venue
-            puts self.all.find_by venue: search_venue
+        found_venue = Venue.all.find_by name: search_venue
+        if found_venue.id
+            found_concerts = self.all.select {|o| o.venue_id == found_venue.id}
+
+            puts "\n"
+            puts "These are the upcoming events at #{found_venue.name}"
+            puts "\n"
+            # binding.pry
+            found_concerts.each do |concert|
+                puts "#{concert.show_date} - #{concert.artist.name}"
+            end
+            puts "\n"
         else
             puts "Sorry, we couldn't find any upcoming shows at that venue!"
             sleep(3)
@@ -53,8 +69,17 @@ class Concert < ActiveRecord::Base
     end
 
     def self.date_search(search_date)
+        search_date = Date.parse(search_date)
         if self.all.find_by show_date: search_date
-            puts self.all.find_by show_date: search_date
+            found_concerts = self.all.select {|o| o.show_date == search_date}
+            puts "\n"
+            puts "These are the events happening on #{search_date}"
+            puts "\n"
+            binding.pry
+            found_concerts.each do |concert|
+                puts "#{concert.artist.name} playing at #{concert.venue.name}"
+            end
+            puts "\n"
         else
             puts "Sorry, we couldn't find any shows on that date!"
             sleep(3)

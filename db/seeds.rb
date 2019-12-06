@@ -5,10 +5,6 @@ number_of_concerts = 60
 number_of_attendees = 2000
 number_of_venues = 10
 number_of_attendees_concerts = (500..5000).to_a.sample
-<<<<<<< HEAD
-#number_of_attendances = 0 #EDIT THIS LATER
-=======
->>>>>>> a4b41d03fe515279f30980113e66dda0e20c0b7d
 
 number_of_artists.times do 
     Artist.create(
