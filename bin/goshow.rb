@@ -11,5 +11,10 @@ Attendee.new_or_existing
 
 
 puts `clear`
-puts "finished"
+
+Concert.search_select
+
+# binding.pry
+
+# puts "finished"
 # search_category = gets.chomp
