@@ -6,17 +6,18 @@ class Attendee < ActiveRecord::Base
         user_status = gets.chomp
 
         if user_status.downcase == "n" || user_status.downcase == "new"
+            puts "\n"
             puts "Thank you for using GoShow!"
-            puts "Follow these steps to create your profile,"
+            puts "Follow these steps to create your profile..."
             sleep(3)
             self.create_attendee_profile
         elsif user_status.downcase == "r" || user_status.downcase == "returning" 
+            puts `clear`
             puts "Thank you for using GoShow! Please verify the email on your profile:"
             validate_email = gets.chomp
             self.validate_attendee(validate_email)
             puts `clear`
-            puts "User found. Welcome back!"
-            sleep(3)
+            # sleep(3)
             #REDIRECT USER TO A METHOD
             #SAID METHOD IS NOT WRITTEN YET
         else
@@ -27,7 +28,17 @@ class Attendee < ActiveRecord::Base
     end
 
     def self.validate_attendee(email_input)
-        self.all.find_by email: email_input
+        if self.all.find_by email: email_input
+            current_user = self.all.find_by email: email_input
+            puts "User found. Welcome back, #{current_user.name.split[0]}!"
+            sleep(3)
+            puts `clear`
+        else
+            puts "Email not found"
+            sleep(3)
+            puts `clear`
+            self.new_or_existing
+        end
     end
 
     def self.create_attendee_profile
@@ -65,7 +76,7 @@ class Attendee < ActiveRecord::Base
             puts "Great, your profile is complete!"
             sleep(3)
         elsif profilestatus.downcase == "n" || profilestatus.downcase == "no" 
-            p "Please enter your correct information."
+            puts "Please enter your correct information."
             sleep(3)
             self.create_attendee_profile
         else
